@@ -1,4 +1,3 @@
-![logo supmap](../docs/logo-full-white.png)
 
 # SUPMAP - Real-time Navigation System
 
@@ -14,11 +13,12 @@ The SUPMAP project consists of three main repositories:
 | [Mobile App](https://github.com/SUPMAP-DELTA-FORCE/supmap-mobile-app.git) | The mobile application repository, designed for both Android and iOS, providing real-time navigation and traffic updates on the go. |
 | [Webapp](https://github.com/SUPMAP-DELTA-FORCE/supmap-webapp.git)         | The web-based interface for users to access SUPMAP’s features through a browser.                                                    |
 | [Drive](https://drive.google.com/drive/folders/1wV4abY4VBuYeIPjC09pJ3VxxDqqWqTtb?usp=sharing) | Shared Google Drive folder containing additional project resources. |
-
+| [Discord](https://discord.gg/8jjrztYUTZ)                                  | Join our Discord community for discussions, support, and collaboration.                                                            |
 
 </div>
 
 ---
+![logo supmap](../docs/logo-full-white.png)
 
 ## 📖 Project Overview
 
