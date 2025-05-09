@@ -1,129 +1,116 @@
+![logo supmap](https://raw.githubusercontent.com/SUPMAP-DELTA-FORCE/supmap/refs/heads/main/docs/img/bg.gif?token=GHSAT0AAAAAADCYL2F2KK3QHD62SIN333CE2A5LJFQ)
 
-# SUPMAP - Real-time Navigation System
+# Supmap
 
-Welcome to the **SUPMAP** project! This repository contains the complete source code for our real-time navigation application, developed for the fictitious company **Trafine**. The system provides real-time traffic updates, optimized routes, and incident reporting, with a strong focus on **scalability, security, and user experience**.
+Supmap is a real-time navigation and community-driven traffic alert application inspired by Waze. It enables users to navigate with optimized routes, receive and report live incidents (accidents, traffic jams, road closures, police controls, obstacles), and contribute to the reliability of alerts through community validation. Supmap features a mobile app for navigation and reporting, a web dashboard for data management, and a scalable microservices backend, all focused on improving travel in France.
 
-The SUPMAP project consists of three main repositories:
+## Ressources and useful links
+
+| Resource         | Link                                                                                                 |
+| ---------------- | ---------------------------------------------------------------------------------------------------- |
+| 📦 Repository    | [git@github.com:SUPMAP-DELTA-FORCE/supmap.git](https://github.com/SUPMAP-DELTA-FORCE/supmap)         |
+| 👥 Organization  | [SUPMAP-DELTA-FORCE](https://github.com/SUPMAP-DELTA-FORCE)                                          |
+| 📚 Documentation | [Google Drive](https://drive.google.com/drive/folders/1zssof3ScdPpFf2q76ud1qlZG4JHQew-u?usp=sharing) |
+| 💬 Discord       | [Join our community](https://discord.gg/8jjrztYUTZ)                                                  |
+
+## Tech stack
+
+<p align="center">
+  <a href="https://skillicons.dev">
+    <img src="https://skillicons.dev/icons?i=docker,nest,next,androidstudio,kotlin,postgres,rabbitmq" />
+  </a>
+</p>
 
 <div align="center">
-
-| Repository                                                                | Description                                                                                                                         |
-| ------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| [Backend](https://github.com/SUPMAP-DELTA-FORCE/supmap-backend.git)       | This repository hosts the backend services, including APIs and database management for SUPMAP.                                      |
-| [Mobile App](https://github.com/SUPMAP-DELTA-FORCE/supmap-mobile-app.git) | The mobile application repository, designed for both Android and iOS, providing real-time navigation and traffic updates on the go. |
-| [Webapp](https://github.com/SUPMAP-DELTA-FORCE/supmap-webapp.git)         | The web-based interface for users to access SUPMAP’s features through a browser.                                                    |
-| [Drive](https://drive.google.com/drive/folders/1wV4abY4VBuYeIPjC09pJ3VxxDqqWqTtb?usp=sharing) | Shared Google Drive folder containing additional project resources. |
-| [Discord](https://discord.gg/8jjrztYUTZ)                                  | Join our Discord community for discussions, support, and collaboration.                                                            |
-
+  <a href="https://k7hfcl3c2m0luhwe.public.blob.vercel-storage.com/app-release-KpHBqJCnulgGYCzUkNtPbpuHxwjdaW.apk">
+    <img src="https://img.shields.io/badge/Download-Android_App-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Download Android App"/>
+  </a>
 </div>
 
----
-![logo supmap](../docs/logo-full-white.png)
+## Architecture overview
 
-## 📖 Project Overview
+```mermaid
+graph TD
+A1@{ shape: processes, label: "auth API" }
+A2@{ shape: processes, label: "navigation API" }
+B[frontend]
+C[RabbitMq]
+db1[(auth db)]
+db2[(navigation db)]
 
-The SUPMAP system enables users to navigate in real-time while receiving live traffic updates, accident alerts, and other road-related events. It allows users to report incidents and contribute to a collaborative driving experience.
 
-The project consists of:
+A1 --> db1
+A2 --> db2
 
-- **A mobile application** (Android) for navigation and real-time updates.
-- **A web application** for administrative management and data visualization.
-- **A backend service** that handles API requests, authentication, and database management.
+B --> A1
+B --> A2
+A1 <--> C
+A2 <--> C
+```
 
-## 🚀 Features
+You will find more informations about the cloud deployment of the project in the [DEPLOY.md](https://github.com/SUPMAP-DELTA-FORCE)
 
-- **Real-time navigation with optimized routing**
-- **Incident reporting (accidents, traffic jams, roadblocks, police controls, etc.)**
-- **Community validation of alerts**
-- **Integration with Mapbox for mapping services**
-- **Firebase Authentication for secure login**
-- **Azure for secure storage and API integration**
-- **Statistical analysis and data visualization for traffic insights**
+## Run the project
 
----
-
-## 🏗️ Project Structure
-
-| Component      | Technology Stack                                             |
-| -------------- | ------------------------------------------------------------ |
-| **Backend**    | NestJS, PostgreSQL, Azure Storage, Firebase Auth, Mapbox API |
-| **Mobile App** | Kotlin (Android), Firebase, Mapbox Navigation API            |
-| **Webapp**     | Next.js, React, Material-UI, Supabase                        |
-
----
-
-## ✅ Prerequisites
-
-To set up and run the project locally, ensure you have the following installed:
-
-1. **Node.js** (>= 16.x) & **npm** (>= 8.x)
-2. **Docker** (for PostgreSQL and Azurite emulation)
-3. **Android Studio** (for mobile app development)
-4. **NestJS CLI** (for backend development)
-5. **Environment Variables**: Setup your `.env` files
-
-### Environment Variables
-
-Each repository requires an `.env` file for configuration. You can request access to secrets management at [supmap-deltaforce@proton.me](mailto:supmap-deltaforce@proton.me).
-
----
-
-## 🏃 Running the Project Locally
-
-### Backend Setup
+clone the project
 
 ```sh
-git clone git@github.com:SUPMAP-DELTA-FORCE/supmap-backend.git
-cd supmap-backend
-npm install
+git clone git@github.com:SUPMAP-DELTA-FORCE/supmap.git
+# you must belong to the supmaps' github organization
+```
+
+copy and fill the env variables
+
+```sh
 cp .env.example .env
-npm run start:dev
+# Dont forget to fill in the secrets if not already done
 ```
 
-Backend API should be available at `http://localhost:3000`
-
-### Mobile App Setup
+Launch the services
 
 ```sh
-git clone git@github.com:SUPMAP-DELTA-FORCE/supmap-mobile-app.git
+docker compose up --build -d
 ```
 
-- Open **Android Studio** and load the project.
-- Configure the `local.properties` file.
-- Click **Run** to launch the application.
+---
 
-### Webapp Setup
+## Features
 
-```sh
-git clone git@github.com:SUPMAP-DELTA-FORCE/supmap-webapp.git
-cd supmap-webapp
-npm install
-cp .env.example .env.local
-npm run dev
-```
+See all our demos [here](https://www.youtube.com/playlist?list=PL1aKYgl1au6-A316Cm7tF_XKqPEY9m5qG)
 
-Frontend should be available at `http://localhost:3000`
+| Feature                                       | Status | Notes/Details                                                                                         |
+| --------------------------------------------- | ------ | ----------------------------------------------------------------------------------------------------- |
+| **User Authentication (OAuth2 & Standard)**   | ✅     | Google OAuth2 and standard login supported, even has password recovery                                |
+| **Real-time Map Display**                     | ✅     | Mapbox integration, real-time updates                                                                 |
+| **Route Calculation (Optimized)**             | ✅     | Best route based on traffic                                                                           |
+| **Automatic Route Recalculation**             | ✅     | Route updates on incident/traffic change                                                              |
+| **Incident Reporting**                        | ✅     | Users can report accidents, jams, closures, police, obstacles                                         |
+| **Incident Validation/Community Voting**      | ✅     | Users can upvote/downvote/validate incidents                                                          |
+| **Alert Management**                          | ✅     | Real-time alerts on route (accidents, jams, etc.)                                                     |
+| **Route Choice (avoid tolls, etc.)**          | ❌     | not done                                                                                              |
+| **Driving Instructions**                      | ❌     | Turn-by-turn navigation, not done                                                                     |
+| **Geolocation & Visual Progress**             | ✅     | User location and route progress shown on map                                                         |
+| **Send Route to Mobile/QR Code**              | ❌     | QR code generation: partial/in progress                                                               |
+| **Web Dashboard for Data Management**         | ✅     | Basic dashboard for viewing alerts                                                                    |
+| **Role-based Permissions**                    | ✅     | RBAC, different roles lead to different capabilities                                                  |
+| **Data Encryption (at rest & in transit)**    | ✅     | HTTPS enforced, sensitive data encrypted in DB                                                        |
+| **Protection against XSS/CSRF/SQL Injection** | ✅     | Standard web security practices                                                                       |
+| **Efficient Data Storage**                    | ✅     | Scalable DB for incidents, routes, traffic                                                            |
+| **Traffic Data Analysis/Statistics**          | ✅     | Basic stats available, advanced analytics in progress                                                 |
+| **Traffic Jam Prediction (historical data)**  | ✅     | Daily data pipeline to predict regional traffic ( see [this repository]([https://github.com/SUPMAP-DELTA-FORCE/supmap/tree/main/data-prediction](https://github.com/SUPMAP-DELTA-FORCE/supmap/tree/main/data-prediction))) |
+| **Containerized Deployment (docker-compose)** | ✅     | All services deployable via docker-compose                                                            |
+| **Documentation (Technical & User)**          | ✅     | README, setup, and user guide provided                                                                |
 
 ---
 
-## 🛠️ Deployment & Production Notes
+# About the authors
 
-- **Ensure secrets are managed securely** (avoid committing API keys in `.env` files)
+This project is open to contributions, if you want you can consult the [CONTRIBUTING.md](./CONTRIBUTING.md) to discover the workflow to propose a change or [open an issue](https://github.com/SUPMAP-DELTA-FORCE/supmap/issues/new)
+| Avatar | Name | GitHub |
+| ------------------------------------------------------------ | ------------------------ | -------------------------------------------- |
+| <img src="https://github.com/naikibro.png" width="60px;"/> | Vaanaiki Brotherson | [@naikibro](https://github.com/naikibro) |
+| <img src="https://github.com/Luluscript.png" width="60px;"/> | Ludivine TULCIBIEZ | [@Luluscript](https://github.com/Luluscript) |
+| <img src="https://github.com/MaximeNGY.png" width="60px;"/> | Maxime NGUYEN | [@MaximeNGY](https://github.com/MaximeNGY) |
+| <img src="https://github.com/Chrinovic.png" width="60px;"/> | Chrinovic KIBAMGU TSIMBA | [@Chrinovic](https://github.com/Chrinovic) |
 
----
-
-## 📜 License
-
-This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
-
----
-
-For more information, contact the development team at [supmap-deltaforce@proton.me](mailto:supmap-deltaforce@proton.me)
-
-**Happy Coding! 🚀**
-
----
-
-# ❤️ Contributors
-
-[<img src="https://github.com/naikibro.png" width="250px;"/><br /><sub><a href="https://github.com/naikibro">Vaanaiki Brotherson</a></sub>](https://github.com/naikibro)
+🚀 **Happy Coding!**
